@@ -1,20 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-class Title extends Component {
+class Contador extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { contador: this.props.contadorInicial };
+    setInterval(() => this.setState({ contador: this.state.contador + 1 }), 1000);
+  }
   render() {
-    return <h1>{ this.props.text }</h1>
+    return <ContadorNumero numero={ this.state.contador } />;
   }
 }
 
-Title.defaultProps = {
-  text: 'Titulo por defecto'
+Contador.defaultProps = {
+  contadorInicial: 0
+}
+
+class ContadorNumero extends Component {
+  render() {
+    return <span>{ this.props.numero }</span>;
+  }
 }
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Title text="Otro titulo desde props" />
+        <p>Propagando el state de nuestros componentes</p>
+        <Contador contadorInicial={ 100 } />
       </div>
     );
   }
