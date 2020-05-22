@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import EjemploDeComponentDidMount from './sections/life-cycle/componentDidMount';
+import FetchExample from './sections/fetch-example';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <EjemploDeComponentDidMount />
+        <FetchExample />
       </div>
     );
   }
