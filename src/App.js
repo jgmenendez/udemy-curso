@@ -1,47 +1,33 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
-
-class Box extends Component {
-  render() {
-    return (
-      <div style={{ border: '1px solid #000', margin: 5, padding: 5 }}>
-        { this.props.children }
-      </div>
-    );
-  }
-}
-
-class Article extends Component {
-  static propTypes = {
-    author: PropTypes.string.isRequired
-  }
-
-  render() {
-    const { author, children, date, title } = this.props;
-
-    return (
-      <section>
-        <h2>{ title }</h2>
-        { author && <p><em>Escrito por { author }</em></p> }
-        <Box>{ date }</Box>
-        <article>{ children }</article>
-      </section>
-    );
-  }
-}
 
 class App extends Component {
+  // constructor por defecto
+  // constructor(...args) {
+  //   super(...args);
+  // }
+
+  constructor(props) {
+    console.log('constructor');
+    super(props); // Este método llama al constructor de Component
+
+    // inicializamos el state de nuestro componente
+    this.state = { mensajeInicial: 'mensaje inicial' };
+
+    // bindemaos el contexto al método
+    // this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick = () => {
+    this.setState({ mensajeInicial: 'mensaje cambiado' });
+  }
+
   render() {
+    console.log('render');
     return (
       <div className="App">
-        <h4>Children props</h4>
-        <Article 
-          date={ new Date().toLocaleDateString() }
-          title='Artículo sobre la prop children'
-        >
-          <p>El contenido que envolvemos dentro del componente Article será enviado al componente como this.props.children.</p>
-          <strong>Y mantiene las etiquetas y componentes que hayáis añadido dentro.</strong>
-        </Article>
+        <h4>Ciclo de montaje: constructor</h4>
+        { this.state.mensajeInicial }
+        <button onClick={ this.handleClick }>Cambiar mensaje</button>
       </div>
     );
   }
