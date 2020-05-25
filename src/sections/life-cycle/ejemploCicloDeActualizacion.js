@@ -13,24 +13,35 @@ class AnimalImage extends Component {
     state = { src: ANIMAL_IMAGES[this.props.animal] };
 
     componentWillReceiveProps(nextProps) {
-        console.log('1. componentWillReceiveProps');
+        console.clear();
+        console.log('1. componentWillReceiveProps', nextProps);
         console.log(nextProps);
         this.setState({ src: ANIMAL_IMAGES[nextProps.animal] });
     }
 
     shouldComponentUpdate(nextProps) {
-        console.log('2. shouldComponentUpdate');
-        console.log('anterior: ', this.props.animal);
-        console.log('nuevo: ', nextProps.animal);
-
-        // Hay que devolver un booleano
-        // Si este método no existe, se devuelve true por defecto
-
+        console.log('2. shouldComponentUpdate', nextProps);
         return this.props.animal !== nextProps.animal;
     }
 
+    componentWillUpdate(nextProps, nextState) {
+        console.log('3. componentWillUpdate', nextProps, nextState);
+        const img = document.querySelector('img');
+        console.log('from img element', { alt: img.alt });
+
+        // web animations api
+        img.animate([{
+            filter: 'blur(0px)'
+        }, {
+            filter: 'blur(2px)'
+        }], {
+            duration: 500,
+            easing: 'ease'
+        });
+    }
+
     render() {
-        console.log('1. al montar / 3. al actualizar | render');
+        console.log('-> render');
         return (
             <div>
                 <p>Selected { this.props.animal }</p>
@@ -62,7 +73,7 @@ class EjemploCicloDeActualizacion extends Component {
     render() {
         return (
             <div>
-                <h4>Ciclo de Actualización, Ejemplo de: ShouldComponentUpdate</h4>
+                <h4>Ciclo de Actualización, Ejemplo de: ComponentWillUpdate</h4>
                 { ANIMALS.map(this._renderAnimalButton) }
                 <AnimalImage animal={ this.state.animal } />
             </div>
